@@ -19,19 +19,21 @@ local function RunEventHandlerInFreeThread(...)
 end
 
 local function Connection_Disconnect(self: Connection)
-	local Prev, Next = self.Next, self.Prev	
+	-- do NOT use variables for Prev, Next.
+	-- or it could cause potential crashes in live games
+
 	local Signal = self.Signal
 	
-	if Prev then
-		Prev.Next = Next
+	if self.Prev then
+		self.Prev.Next = self.Next
 	end
 	
-	if Next then
-		Next.Prev = Prev
+	if self.Next then
+		self.Next.Prev = self.Prev
 	end
 	
 	if Signal.Connections == self then
-		Signal.Connections = Next
+		Signal.Connections = self.Next
 	end
 end
 
