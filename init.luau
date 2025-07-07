@@ -19,9 +19,9 @@ local function RunEventHandlerInFreeThread(...)
 end
 
 local function Connection_Disconnect(self: Connection)
-	-- do NOT use variables for Prev, Next.
-	-- or it could cause potential crashes in live games
-
+	-- do NOT use vatiables for Prev, Next
+	-- using variables could cause crashes in live games
+	
 	local Signal = self.Signal
 	
 	if self.Prev then
@@ -132,8 +132,8 @@ type Signal = {
 type Connection = {
 	Signal: Signal,
 	
-	Next: Signal | false,
-	Prev: Signal | false,
+	Next: Connection | any,
+	Prev: Connection | any, -- any to silence type checker error -_-
 
 	Fn: <T...>(T...) -> (T...),
 	Disconnect: typeof(ConnectionClass.Disconnect),
