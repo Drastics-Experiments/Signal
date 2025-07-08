@@ -2,7 +2,6 @@
 -- Fastest signal module possibly
 
 local FreeRunnerThread = nil
-local Empty_Table = {} -- table.cloning this is faster than using {}
 
 local function AcquireRunnerThreadAndCallEventHandler(Fn, ...)
 	local AcquiredRunnerThread = FreeRunnerThread
@@ -40,7 +39,7 @@ end
 local ConnectionClass = {
 	-- Have memory reserved for these values
 	Fn = function()end,
-	Signal = table.clone(Empty_Table),
+	Signal = {},
 	Next = false,
 	Prev = false,
 
