@@ -18,7 +18,7 @@ local function RunEventHandlerInFreeThread(...)
 end
 
 local function Connection_Disconnect(self: Connection)
-	-- do NOT use vatiables for Prev, Next
+	-- do NOT use variables for Prev, Next
 	-- using variables could cause crashes in live games
 	
 	local Signal = self.Signal
@@ -83,7 +83,7 @@ local SignalClass = {
 		self:Once(function(...)
 			if coroutine.status(Running) ~= "suspended" then return end
 			task.spawn(Running, ...)
-		end, true)
+		end)
 		return coroutine.yield()
 	end,
 	Connect = function<T...>(self: Signal, Fn: (T...) -> (T...))
